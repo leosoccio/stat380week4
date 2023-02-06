@@ -1,76 +1,249 @@
 ---
-title: "Weekly Summary Template"
-author: "Author Name"
+title: "Week 4 Summary"
+author: "Leo Soccio"
 title-block-banner: true
 title-block-style: default
 toc: true
-format: html
-# format: pdf
+# format: html
+format: pdf
 ---
 
----
+------------------------------------------------------------------------
 
 ## Tuesday, Jan 17
 
-::: {.callout-important}
+::: callout-important
 ## TIL
 
-Include a _very brief_ summary of what you learnt in this class here. 
+Include a *very brief* summary of what you learnt in this class here.
 
 Today, I learnt the following concepts in class:
 
-1. Item 1
-1. Item 2
-1. Item 3
+1.  Intro to Statistical Learning
+2.  How the Linear Regression Model is Created
 :::
 
-Provide more concrete details here. You can also use footenotes[^footnote] if you like
+Provide more concrete details here. You can also use footnotes[^1] if you like
 
-```{R results='hide'}
-#| output: false
-library(dplyr)
-library(purrr)
+[^1]: You can include some footnotes here
+
+agenda: basics of statistical learning + regression
+
+```{r}
+#required packages
+library(tidyverse)
+library(ISLR2)
+library(cowplot)
+library(kableExtra)
+library(htmlwidgets)
 ```
 
+### Statistical Learning
 
-For example: 
-in class we learnt we learnt about the `map` function from the `purrr` package. 
+Suppose we have a data set: $X=[X_1,X_2...X_p]$ Each $X_n$ is a covariate (also predictor variable or independent variable). Then we have y, the response/outcome/dependent variable.
 
+Statistical learning is to find a function f such that y=f(X) such that $y_i=f(X_i)=f(X_{i1} ... X_{ip})$
 
-```{R results='hide', fig.width=7, fig.height=7}
-par(mfrow=c(3, 3), mar=c(3.5, 3.5, 2, 1), mgp=c(2.4, 0.8, 0))
-map(1:9, function(i)rnorm(1000) %>% hist(., main=i, col=i))
+We should have a way to map covariates to the response. There are different flavors of statistical learning:
+
+-   Supervised Learning (Includes **regression** \[for quantitative y\] and classification \[for categorical y\])
+-   Unsupervised Learning (no y, we need to figure out what it could be)
+-   Semi-supervised learning (We have far more total observations than observations including a y-value)
+-   Reinforcement learning (the algorithm is "punished" for doing something "wrong")
+
+We will focus on regression today. We will start with an example from the U.S. Census regarding teen birth rate and poverty in each state.
+
+```{r}
+# load in the data
+df <- read_tsv("https://online.stat.psu.edu/stat462/sites/onlinecourses.science.psu.edu.stat462/files/data/poverty/index.txt")
+head(df, 10)
 ```
 
+```{r}
+# define our covariate and our response, then visualize the relationship
+x <- df$PovPct
+y <- df$Brth15to17
+plot(x,y,pch=20, xlab="poverty %", ylab="birth rate (15-17)")
+```
 
+To create a linear regression curve, we want to fit a regression line $y=\beta_0+\beta_1x$.
+
+Create a line through the points:
+
+```{r}
+plt <- function(){
+  plot(x,y,pch=20,xlab="poverty %", ylab="birth rate (15-17)")
+}
+
+b0 <- 10
+b1 <- 1.1
+
+yhat<-b0+b1*x
+
+plt()
+curve(b0+b1*x, 5, 30, add=T, col="red")
+segments(x,y,x,yhat)
+
+resids <- abs(y-yhat)^2
+ss_resids <- sum(resids)
+title(main=paste("ss_residuals=",ss_resids,"b0=",b0,"b1=",b1))
+```
+
+Least squares regression is calculated by dropping a vertical line (residual=$y-\hat{y}$) from each data point to the fit line. The residual is then squared and those squared residuals are summed to get a sum of squares. We want to find the line with the lowest sum of squares.
+
+The lm() function creates this model for us in R.
+
+```{r}
+model <- lm(y~x)
+
+sum(residuals(model)^2)
+
+summary(model)
+```
 
 ## Thursday, Jan 19
 
-
-
-::: {.callout-important}
+::: callout-important
 ## TIL
 
-Include a _very brief_ summary of what you learnt in this class here. 
+Include a *very brief* summary of what you learnt in this class here.
 
 Today, I learnt the following concepts in class:
 
-1. Item 1
-1. Item 2
-1. Item 3
+1.  Details of Linear Regression (hypotheses, p-values, beta variables, etc.)
+2.  R-squared
+3.  Predicting using the linear regression model
 :::
 
-Provide more concrete details here, e.g., 
+Provide more concrete details here:
 
-In class we learnt how to use the `map` function to create multiple regression diagnostic plots
+When creating a model, we want y as a function of x. In R this looks like:
 
-```{R results='hide', fig.height=4}
-par(mfcol=c(2, 3), mar=c(3.5, 3.5, 2, 1), mgp=c(2.4, 0.8, 0))
-mtcars %>%
-  split(.$cyl) %>%
-  map(~ lm(mpg ~ wt, data = .x)) %>%
-  map(function(x)plot(x, which=c(1, 2)))
+```{r}
+formula(y~x)
+typeof(formula(y~x))
+```
+
+A linear regression model in R is called using the Linear Model function lm().
+
+```{r}
+model <- lm(y~x)
+model
+
+x2<-x^2
+model2 <- lm(y~x+x2)
+model2
+
+summary(model)
+```
+
+**What do the hypotheses for regression look like?**
+
+-   The null hypothesis is that there is no linear relationship between y and x. This means that $\beta_1=0$
+-   The alternate hypothesis is that there is a linear relationship, so $\beta_1 \neq0$
+
+To summarize, $H_0: \beta_1=0, H_A:\beta_1\neq0$
+
+When we see a small p-value, then we reject the null hypothesis in favor of the alternate. This means that there is a significant linear relationship between y and x. That is to say, there is significant evidence of a correlation between x and y.
+
+The p-value at the bottom of the summary is based on the F statistic, which tests the overall model instead of a specific covariate.
+
+** R-Squared**
+
+```{r}
+library(broom)
+
+summary(model) %>%
+  broom::tidy()
+```
+
+Some terminology: x is our covariate, y is our response, $\hat{y}$ are the fitted values, and $y-\hat{y}$ are the residuals.
+
+```{r}
+head(x)
+head(y)
+yhat <- fitted(model)
+head(yhat)
+res <- residuals(model)
+head(res)
+```
+
+Sum of squares for residuals:
+$SS_{Res}=\sum_{i=1}^n e_i^2=\sum_{i=1}^n (y_i-\hat{y}_i)^2$
+
+Sum of squares for regression:
+$SS_{Reg}=\sum_{i=1}^n(\hat{y}_i=\bar{y})^2$
+
+Sum of squares total
+$SS_{Tot}=\sum_{i=1}^n(y_i-\bar{y})^2$
+
+$R^2$ is another important value and is given by $R^2=\frac{SS_{Reg}}{SS_{Tot}}$
+
+Examples:
+
+```{r}
+x <- seq(0,5,length=100)
+
+b0 <-1
+b1 <-3
+
+y1 <- b0+b1*x+rnorm(100)
+y2 <- b0+b1*x+rnorm(100)*3
+
+par(mfrow=c(1,2)) # lets you create side by side plots. This one is 1 row, 2 cols.
+
+model1 <- lm(y1~x)
+model2<-lm(y2~x)
+
+plot(x,y1)
+curve(coef(model1)[1]+coef(model1)[2]*x, add=T, col="red")
+
+plot(x, y2)
+curve(coef(model2)[1]+coef(model2)[2]*x,add=T,col="red")
+```
+
+```{r}
+summary(model1)
+summary(model2)
+```
+
+* R-squared and the p-value are independent of each other; just because it is a significant model doesn't mean the model fits closely.
+
+**Prediction**
+
+Return to the poverty dataset:
+
+Suppose we have a new state formed whose PovPct value is 21:
+```{r}
+x <- df$PovPct
+y <- df$Brth15to17
+plt()
+abline(v=21,col="green")
+lines(x,fitted(lm(y~x)), col="red")
+```
+
+We can look at the regression line to predict the teen birth rate in this state by finding the point on the line where x=21. In R, we can use predict() to do this:
+```{r}
+model<-lm(y~x)
+new_x<-data.frame(x=c(21))
+new_y<-predict(model,new_x)
+new_y
+```
+
+```{r}
+plt()
+abline(v=21,col="green")
+lines(x,fitted(lm(y~x)),col="red")
+points(new_x,new_y, col="purple")
+```
+
+```{r}
+new_x<-data.frame(x=c(1:21))
+new_y<-predict(model,new_x)
+plt()
+for(a in new_x){abline(v=a, col="green")}
+lines(x,fitted(lm(y~x)),col="red")
+points(new_x%>%unlist(),new_y%>%unlist(),col="purple")
 ```
 
 
-[^footnote]: You can include some footnotes here

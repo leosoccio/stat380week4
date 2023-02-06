@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Author Name">
+<meta name="author" content="Leo Soccio">
 
-<title>Weekly Summary Template</title>
+<title>Week 4 Summary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,6 +98,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -106,7 +107,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Weekly Summary Template</h1>
+      <h1 class="title">Week 4 Summary</h1>
                       </div>
   </div>
     
@@ -116,7 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Author Name </p>
+               <p>Leo Soccio </p>
             </div>
     </div>
       
@@ -131,7 +132,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tuesday-jan-17" id="toc-tuesday-jan-17" class="nav-link active" data-scroll-target="#tuesday-jan-17">Tuesday, Jan 17</a></li>
+  <li><a href="#tuesday-jan-17" id="toc-tuesday-jan-17" class="nav-link active" data-scroll-target="#tuesday-jan-17">Tuesday, Jan 17</a>
+  <ul class="collapse">
+  <li><a href="#statistical-learning" id="toc-statistical-learning" class="nav-link" data-scroll-target="#statistical-learning">Statistical Learning</a></li>
+  </ul></li>
   <li><a href="#thursday-jan-19" id="toc-thursday-jan-19" class="nav-link" data-scroll-target="#thursday-jan-19">Thursday, Jan 19</a></li>
   </ul>
 </nav>
@@ -157,25 +161,145 @@ TIL
 <p>Include a <em>very brief</em> summary of what you learnt in this class here.</p>
 <p>Today, I learnt the following concepts in class:</p>
 <ol type="1">
-<li>Item 1</li>
-<li>Item 2</li>
-<li>Item 3</li>
+<li>Intro to Statistical Learning</li>
+<li>How the Linear Regression Model is Created</li>
 </ol>
 </div>
 </div>
-<p>Provide more concrete details here. You can also use footenotes<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> if you like</p>
+<p>Provide more concrete details here. You can also use footnotes<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> if you like</p>
+<p>agenda: basics of statistical learning + regression</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#required packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0     ✔ purrr   1.0.1
+✔ tibble  3.1.8     ✔ dplyr   1.1.0
+✔ tidyr   1.3.0     ✔ stringr 1.5.0
+✔ readr   2.1.3     ✔ forcats 1.0.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<p>For example: in class we learnt we learnt about the <code>map</code> function from the <code>purrr</code> package.</p>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'
+
+The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmlwidgets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="statistical-learning" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-learning">Statistical Learning</h3>
+<p>Suppose we have a data set: <span class="math inline">\(X=[X_1,X_2...X_p]\)</span> Each <span class="math inline">\(X_n\)</span> is a covariate (also predictor variable or independent variable). Then we have y, the response/outcome/dependent variable.</p>
+<p>Statistical learning is to find a function f such that y=f(X) such that <span class="math inline">\(y_i=f(X_i)=f(X_{i1} ... X_{ip})\)</span></p>
+<p>We should have a way to map covariates to the response. There are different flavors of statistical learning:</p>
+<ul>
+<li>Supervised Learning (Includes <strong>regression</strong> [for quantitative y] and classification [for categorical y])</li>
+<li>Unsupervised Learning (no y, we need to figure out what it could be)</li>
+<li>Semi-supervised learning (We have far more total observations than observations including a y-value)</li>
+<li>Reinforcement learning (the algorithm is “punished” for doing something “wrong”)</li>
+</ul>
+<p>We will focus on regression today. We will start with an example from the U.S. Census regarding teen birth rate and poverty in each state.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">2.4</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="cf">function</span>(i)<span class="fu">rnorm</span>(<span class="dv">1000</span>) <span class="sc">%&gt;%</span> <span class="fu">hist</span>(., <span class="at">main=</span>i, <span class="at">col=</span>i))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load in the data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"https://online.stat.psu.edu/stat462/sites/onlinecourses.science.psu.edu.stat462/files/data/poverty/index.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 51 Columns: 6
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: "\t"
+chr (1): Location
+dbl (5): PovPct, Brth15to17, Brth18to19, ViolCrime, TeenBrth
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 6
+   Location             PovPct Brth15to17 Brth18to19 ViolCrime TeenBrth
+   &lt;chr&gt;                 &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 Alabama                20.1       31.5       88.7      11.2     54.5
+ 2 Alaska                  7.1       18.9       73.7       9.1     39.5
+ 3 Arizona                16.1       35        102.       10.4     61.2
+ 4 Arkansas               14.9       31.6      102.       10.4     59.9
+ 5 California             16.7       22.6       69.1      11.2     41.1
+ 6 Colorado                8.8       26.2       79.1       5.8     47  
+ 7 Connecticut             9.7       14.1       45.1       4.6     25.8
+ 8 Delaware               10.3       24.7       77.8       3.5     46.3
+ 9 District_of_Columbia   22         44.8      102.       65       69.1
+10 Florida                16.2       23.2       78.4       7.3     44.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our covariate and our response, then visualize the relationship</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> df<span class="sc">$</span>PovPct</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>Brth15to17</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">xlab=</span><span class="st">"poverty %"</span>, <span class="at">ylab=</span><span class="st">"birth rate (15-17)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>To create a linear regression curve, we want to fit a regression line <span class="math inline">\(y=\beta_0+\beta_1x\)</span>.</p>
+<p>Create a line through the points:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="st">"poverty %"</span>, <span class="at">ylab=</span><span class="st">"birth rate (15-17)"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">1.1</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>yhat<span class="ot">&lt;-</span>b0<span class="sc">+</span>b1<span class="sc">*</span>x</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plt</span>()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(b0<span class="sc">+</span>b1<span class="sc">*</span>x, <span class="dv">5</span>, <span class="dv">30</span>, <span class="at">add=</span>T, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(x,y,x,yhat)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">&lt;-</span> <span class="fu">abs</span>(y<span class="sc">-</span>yhat)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>ss_resids <span class="ot">&lt;-</span> <span class="fu">sum</span>(resids)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="fu">paste</span>(<span class="st">"ss_residuals="</span>,ss_resids,<span class="st">"b0="</span>,b0,<span class="st">"b1="</span>,b1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Least squares regression is calculated by dropping a vertical line (residual=<span class="math inline">\(y-\hat{y}\)</span>) from each data point to the fit line. The residual is then squared and those squared residuals are summed to get a sum of squares. We want to find the line with the lowest sum of squares.</p>
+<p>The lm() function creates this model for us in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(model)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1509.635</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.2275  -3.6554  -0.0407   2.4972  10.5152 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.2673     2.5297   1.687    0.098 .  
+x             1.3733     0.1835   7.483 1.19e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.551 on 49 degrees of freedom
+Multiple R-squared:  0.5333,    Adjusted R-squared:  0.5238 
+F-statistic:    56 on 1 and 49 DF,  p-value: 1.188e-09</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="thursday-jan-19" class="level2">
 <h2 class="anchored" data-anchor-id="thursday-jan-19">Thursday, Jan 19</h2>
@@ -192,22 +316,233 @@ TIL
 <p>Include a <em>very brief</em> summary of what you learnt in this class here.</p>
 <p>Today, I learnt the following concepts in class:</p>
 <ol type="1">
-<li>Item 1</li>
-<li>Item 2</li>
-<li>Item 3</li>
+<li>Details of Linear Regression (hypotheses, p-values, beta variables, etc.)</li>
+<li>R-squared</li>
+<li>Predicting using the linear regression model</li>
 </ol>
 </div>
 </div>
-<p>Provide more concrete details here, e.g.,</p>
-<p>In class we learnt how to use the <code>map</code> function to create multiple regression diagnostic plots</p>
+<p>Provide more concrete details here:</p>
+<p>When creating a model, we want y as a function of x. In R this looks like:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">2.4</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>cyl) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> .x)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(x)<span class="fu">plot</span>(x, <span class="at">which=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(y<span class="sc">~</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>y ~ x</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">formula</span>(y<span class="sc">~</span>x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "language"</code></pre>
+</div>
+</div>
+<p>A linear regression model in R is called using the Linear Model function lm().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+      4.267        1.373  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x2<span class="ot">&lt;-</span>x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>x2)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>model2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x + x2)
+
+Coefficients:
+(Intercept)            x           x2  
+   10.60211      0.43733      0.03128  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.2275  -3.6554  -0.0407   2.4972  10.5152 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.2673     2.5297   1.687    0.098 .  
+x             1.3733     0.1835   7.483 1.19e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.551 on 49 degrees of freedom
+Multiple R-squared:  0.5333,    Adjusted R-squared:  0.5238 
+F-statistic:    56 on 1 and 49 DF,  p-value: 1.188e-09</code></pre>
+</div>
+</div>
+<p><strong>What do the hypotheses for regression look like?</strong></p>
+<ul>
+<li>The null hypothesis is that there is no linear relationship between y and x. This means that <span class="math inline">\(\beta_1=0\)</span></li>
+<li>The alternate hypothesis is that there is a linear relationship, so <span class="math inline">\(\beta_1 \neq0\)</span></li>
+</ul>
+<p>To summarize, <span class="math inline">\(H_0: \beta_1=0, H_A:\beta_1\neq0\)</span></p>
+<p>When we see a small p-value, then we reject the null hypothesis in favor of the alternate. This means that there is a significant linear relationship between y and x. That is to say, there is significant evidence of a correlation between x and y.</p>
+<p>The p-value at the bottom of the summary is based on the F statistic, which tests the overall model instead of a specific covariate.</p>
+<p>** R-Squared**</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic       p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+1 (Intercept)     4.27     2.53       1.69 0.0980       
+2 x               1.37     0.184      7.48 0.00000000119</code></pre>
+</div>
+</div>
+<p>Some terminology: x is our covariate, y is our response, <span class="math inline">\(\hat{y}\)</span> are the fitted values, and <span class="math inline">\(y-\hat{y}\)</span> are the residuals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20.1  7.1 16.1 14.9 16.7  8.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 31.5 18.9 35.0 31.6 22.6 26.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1        2        3        4        5        6 
+31.87154 14.01805 26.37815 24.73014 27.20216 16.35273 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1          2          3          4          5          6 
+-0.3715352  4.8819549  8.6218464  6.8698609 -4.6021608  9.8472677 </code></pre>
+</div>
+</div>
+<p>Sum of squares for residuals: <span class="math inline">\(SS_{Res}=\sum_{i=1}^n e_i^2=\sum_{i=1}^n (y_i-\hat{y}_i)^2\)</span></p>
+<p>Sum of squares for regression: <span class="math inline">\(SS_{Reg}=\sum_{i=1}^n(\hat{y}_i=\bar{y})^2\)</span></p>
+<p>Sum of squares total <span class="math inline">\(SS_{Tot}=\sum_{i=1}^n(y_i-\bar{y})^2\)</span></p>
+<p><span class="math inline">\(R^2\)</span> is another important value and is given by <span class="math inline">\(R^2=\frac{SS_{Reg}}{SS_{Tot}}\)</span></p>
+<p>Examples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span><span class="dv">3</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> b0<span class="sc">+</span>b1<span class="sc">*</span>x<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> b0<span class="sc">+</span>b1<span class="sc">*</span>x<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">100</span>)<span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># lets you create side by side plots. This one is 1 row, 2 cols.</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y1<span class="sc">~</span>x)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>model2<span class="ot">&lt;-</span><span class="fu">lm</span>(y2<span class="sc">~</span>x)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y1)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">coef</span>(model1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="dv">2</span>]<span class="sc">*</span>x, <span class="at">add=</span>T, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y2)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">coef</span>(model2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(model2)[<span class="dv">2</span>]<span class="sc">*</span>x,<span class="at">add=</span>T,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y1 ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.84749 -0.60354  0.04856  0.61525  1.70192 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.08732    0.16702    6.51 3.22e-09 ***
+x            2.98474    0.05771   51.72  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8414 on 98 degrees of freedom
+Multiple R-squared:  0.9647,    Adjusted R-squared:  0.9643 
+F-statistic:  2675 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y2 ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.1117 -2.3201  0.1339  1.8130  7.8502 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   0.3296     0.6335    0.52    0.604    
+x             3.2785     0.2189   14.98   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.191 on 98 degrees of freedom
+Multiple R-squared:  0.696, Adjusted R-squared:  0.6929 
+F-statistic: 224.4 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li>R-squared and the p-value are independent of each other; just because it is a significant model doesn’t mean the model fits closely.</li>
+</ul>
+<p><strong>Prediction</strong></p>
+<p>Return to the poverty dataset:</p>
+<p>Suppose we have a new state formed whose PovPct value is 21:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> df<span class="sc">$</span>PovPct</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>Brth15to17</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plt</span>()</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">21</span>,<span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">fitted</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x)), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can look at the regression line to predict the teen birth rate in this state by finding the point on the line where x=21. In R, we can use predict() to do this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>model<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>new_x<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">21</span>))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>new_y<span class="ot">&lt;-</span><span class="fu">predict</span>(model,new_x)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>new_y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+33.10755 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plt</span>()</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">21</span>,<span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">fitted</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x)),<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(new_x,new_y, <span class="at">col=</span><span class="st">"purple"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>new_x<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>))</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>new_y<span class="ot">&lt;-</span><span class="fu">predict</span>(model,new_x)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plt</span>()</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(a <span class="cf">in</span> new_x){<span class="fu">abline</span>(<span class="at">v=</span>a, <span class="at">col=</span><span class="st">"green"</span>)}</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">fitted</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x)),<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(new_x<span class="sc">%&gt;%</span><span class="fu">unlist</span>(),new_y<span class="sc">%&gt;%</span><span class="fu">unlist</span>(),<span class="at">col=</span><span class="st">"purple"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
